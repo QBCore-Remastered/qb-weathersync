@@ -83,3 +83,16 @@ RegisterCommand("time", function(source, args)
     local minute = tonumber(args[2])
     setTime(hour, minute)
 end, true)
+
+local times = {
+    morning = {hour = 9, minute = 0},
+    noon = {hour = 12, minute = 0},
+    evening = {hour = 18, minute = 0},
+    night = {hour = 23, minute = 0},
+}
+
+for time, data in pairs(times) do
+    RegisterCommand(time, function()
+        setTime(data.hour, data.minute)
+    end, true)
+end
