@@ -1,5 +1,6 @@
 local state = GlobalState
 local baseTime = Config.howManySecondsForAnInGameMinute * 1000
+local freezeTime = Config.freezeTime or false
 
 ---@class Time
 ---@field hour number
@@ -53,6 +54,10 @@ local function setTime(hour, minute)
     state.time = {
         hour = clamp(hour, 0, 23),
         minute = clamp(minute, 0, 59),
+        isMorning = hour < 12,
+        isAfternoon = hour >= 12 and hour < 18,
+        isEvening = hour >= 18 and hour < 23,
+        isNight = hour >= 23 or hour < 6,
     }
 
     return true, {success = true, message = "Time changed to: " .. state.time.hour .. ":" .. state.time.minute}
@@ -68,7 +73,7 @@ CreateThread(function()
         end
         local currentMinute = state.time.minute
         local currentHour = state.time.hour
-        local nextMinute = Config.freezeTime and 0 or 1
+        local nextMinute = freezeTime and 0 or 1
         setTime(currentHour, currentMinute + nextMinute)
         Wait(baseTime or 8)
     end
@@ -82,6 +87,10 @@ RegisterCommand("time", function(source, args)
     local hour = tonumber(args[1])
     local minute = tonumber(args[2])
     setTime(hour, minute)
+end, true)
+
+RegisterCommand("freezetime", function()
+    freezeTime = not freezeTime
 end, true)
 
 local times = {

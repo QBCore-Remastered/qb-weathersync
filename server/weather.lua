@@ -1,5 +1,5 @@
 local state = GlobalState
-
+local freezeWeather = Config.freezeWeather or false
 local validWeatherTypes = {}
 
 for _, validWeatherType in pairs(Config.AvailableWeatherTypes) do
@@ -21,6 +21,8 @@ end
 ---@param weatherType string
 ---@return boolean, {success: boolean, message: string}
 local function setWeather(weatherType)
+
+    if freezeWeather then weatherType = state.weather.current end
 
     weatherType = string.upper(weatherType)
 
@@ -65,4 +67,8 @@ RegisterCommand("weather", function(source, args)
 
     local success, message = setWeather(weatherType)
     print(message.message)
+end, true)
+
+RegisterCommand("freezeWeather", function(source, args)
+    freezeWeather = not freezeWeather
 end, true)

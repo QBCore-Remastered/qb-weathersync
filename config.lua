@@ -3,6 +3,7 @@ Config = {
     startingWeather                 = 'EXTRASUNNY', -- See below for other options
     howManySecondsForAnInGameMinute = 8,
     freezeTime                      = false,
+    freezeWeather                   = false,
     blackout                        = false,
     blackoutAffectsVehicles         = false,
     useServerTime                   = false, -- Sync game time with servers OS time
