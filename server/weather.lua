@@ -1,5 +1,5 @@
 local state = GlobalState
-local freezeWeather = Config.freezeWeather or false
+local freezeWeather = Config.FreezeWeather or false
 local validWeatherTypes = {}
 
 for _, validWeatherType in pairs(Config.AvailableWeatherTypes) do
@@ -49,12 +49,12 @@ AddStateBagChangeHandler("weather", nil, function(_, _, value, _, replicated)
 end)
 
 CreateThread(function()
-    local isDynamicWeather = Config.weatherChangeEvery > 0
+    local isDynamicWeather = Config.WeatherChangeEvery > 0
     while isDynamicWeather do
         local newWeather = getRandomWeather()
         setWeather(newWeather)
 
-        Wait(Config.weatherChangeEvery * 60000)
+        Wait(Config.WeatherChangeEvery * 60000)
     end
 end)
 
