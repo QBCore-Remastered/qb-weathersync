@@ -41,7 +41,9 @@ exports("setWeather", setWeather)
 
 ---@return string
 local function getRandomWeather()
-    return Config.NextWeatherLogic[state.weather.current][math.random(1, #Config.NextWeatherLogic[state.weather.current])] or "CLEAR"
+    local current = Config.NextWeatherLogic[state.weather.current]
+    if not current then return "CLEAR" end
+    return current[math.random(#current)] or "CLEAR"
 end
 
 CreateThread(function()
@@ -63,16 +65,3 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 
     local success, message = setWeather(args.weatherType)
 end)
-
-RegisterCommand("weather", function(source, args)
-    local weatherType = args[1]
-    if not weatherType and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
-        return TriggerClientEvent('qb-weathersync:WeatherMenu', source)
-    end
-
-    local success, message = setWeather(weatherType)
-end, true)
-
-RegisterCommand("freezeWeather", function(source, args)
-    freezeWeather = not freezeWeather
-end, true)
