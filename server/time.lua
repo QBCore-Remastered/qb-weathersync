@@ -10,12 +10,6 @@ state.time = {
     minute = 00,
 }
 
----@class Blackout
----@field enabled boolean
-state.blackout = {
-    enabled = Config.blackout,
-}
-
 -- To ensure a value is between a min and max
 ---@param val number
 ---@param min number
@@ -47,7 +41,7 @@ local function setTime(hour, minute)
 
     if not isValidNumber(hour, "hour") then return false, {success = false, message = "Invalid hour type"} end
     if not isValidNumber(minute, "minute") then return false, {success = false, message = "Invalid minute type"} end
-    
+
     if minute > 59 then minute = 0; hour = hour + 1 end
     if hour > 23 then hour = 0 end
 
