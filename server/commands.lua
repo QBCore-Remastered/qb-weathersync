@@ -33,7 +33,7 @@ QBCore.Commands.Add("weather", "Change the server weather.", {{ name = "weather"
     TriggerClientEvent("QBCore:Notify", source, message.message, success and "success" or "error")
 end, permission)
 
-QBCore.Commands.Add("freezeWeather", "Enable/disable dynamic weather changes.", {}, false, ToggleFreezeWeather, permission)
+QBCore.Commands.Add("freezeweather", "Enable/disable dynamic weather changes.", {}, false, ToggleFreezeWeather, permission)
 
 local times = {
     morning = {hour = 9, minute = 0, help = "Set the time to 09:00"},
