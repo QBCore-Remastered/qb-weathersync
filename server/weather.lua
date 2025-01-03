@@ -1,5 +1,5 @@
 local state = GlobalState
-local freezeWeather = Config.FreezeWeather or false
+local weatherFrozen = Config.FreezeWeather or false
 local validWeatherTypes = {}
 
 for _, validWeatherType in pairs(Config.AvailableWeatherTypes) do
@@ -22,7 +22,7 @@ end
 ---@return boolean, {success: boolean, message: string}
 local function setWeather(weatherType)
 
-    if freezeWeather then weatherType = state.weather.current end
+    if weatherFrozen then weatherType = state.weather.current end
 
     weatherType = string.upper(weatherType)
 
@@ -58,12 +58,12 @@ end)
 
 local function freezeWeather(bool)
     if bool ~= nil then
-        freezeWeather = bool
+        weatherFrozen = bool
         return 
     end
 
     -- toggle if true or false is not provided
-    freezeWeather = not freezeWeather
+    weatherFrozen = not weatherFrozen
 end
 
 exports("freezeWeather", freezeWeather)

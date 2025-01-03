@@ -1,6 +1,6 @@
 local state = GlobalState
 local baseTime = Config.RealSecondsIGMinutes * 1000
-local freezeTime = Config.FreezeTime or false
+local timeFrozen = Config.FreezeTime or false
 
 ---@class Time
 ---@field hour number
@@ -53,7 +53,7 @@ local function setTime(hour, minute)
         isEvening = hour >= 18 and hour < 23,
         isNight = hour >= 23 or hour < 6,
         -- need to fix time frozen..
-        frozen = freezeTime,
+        frozen = timeFrozen,
     }
 
     return true, {success = true, message = "Time changed to: " .. state.time.hour .. ":" .. state.time.minute}
@@ -63,12 +63,12 @@ exports("setTime", setTime)
 
 local function freezeTime(bool)
     if bool ~= nil then
-        freezeTime = bool
+        timeFrozen = bool
         return 
     end
 
     -- toggle if true or false is not provided
-    freezeTime = not freezeTime
+    timeFrozen = not timeFrozen
 end
 
 exports("freezeTime", freezeTime)
@@ -81,7 +81,7 @@ CreateThread(function()
         end
         local currentMinute = state.time.minute
         local currentHour = state.time.hour
-        local nextMinute = freezeTime and 0 or 1
+        local nextMinute = timeFrozen and 0 or 1
         setTime(currentHour, currentMinute + nextMinute)
         Wait(baseTime or 8)
     end
