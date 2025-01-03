@@ -9,6 +9,18 @@ Config = {
     useServerTime                   = false, -- Sync game time with servers OS time
 }
 
+Config.NextWeatherLogic = {
+    ["CLEAR"] = { "CLEARING", "OVERCAST" },
+    ["CLOUDS"] = { "CLEARING", "OVERCAST" },
+    ["EXTRASUNNY"] = { "CLEARING", "OVERCAST" },
+    ["CLEARING"] = { "FOGGY", "CLOUDS", "CLEAR", "EXTRASUNNY", "SMOG", "FOGGY" },
+    ["OVERCAST"] = { "RAIN", "CLOUDS", "CLEAR", "EXTRASUNNY", "SMOG", "FOGGY" },
+    ["THUNDER"] = { "CLEARING" },
+    ["RAIN"] = { "CLEARING" },
+    ["SMOG"] = { "CLEAR" },
+    ["FOGGY"] = { "CLEAR" }
+}
+
 Config.AvailableWeatherTypes = { -- DON'T TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING
     'EXTRASUNNY', 'CLEAR', 'NEUTRAL', 'SMOG', 'FOGGY', 'OVERCAST', 'CLOUDS','CLEARING',
     'RAIN', 'THUNDER', 'SNOW', 'BLIZZARD', 'SNOWLIGHT', 'XMAS', 'HALLOWEEN',
