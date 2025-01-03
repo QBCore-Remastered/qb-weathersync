@@ -41,7 +41,7 @@ exports("setWeather", setWeather)
 
 ---@return string
 local function getRandomWeather()
-    return Config.AvailableWeatherTypes[math.random(1, #Config.AvailableWeatherTypes)]
+    return Config.NextWeatherLogic[state.weather.current][math.random(1, #Config.NextWeatherLogic[state.weather.current])] or "CLEAR"
 end
 
 CreateThread(function()
