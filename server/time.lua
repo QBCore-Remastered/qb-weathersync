@@ -37,7 +37,7 @@ end
 ---@param hour number
 ---@param minute number
 ---@return boolean, {success: boolean, message: string}
-local function setTime(hour, minute)
+function SetTime(hour, minute)
 
     if not isValidNumber(hour, "hour") then return false, {success = false, message = "Invalid hour type"} end
     if not isValidNumber(minute, "minute") then return false, {success = false, message = "Invalid minute type"} end
@@ -57,18 +57,18 @@ local function setTime(hour, minute)
     return true, {success = true, message = "Time changed to: " .. state.time.hour .. ":" .. state.time.minute}
 end
 
-exports("setTime", setTime)
+exports("setTime", SetTime)
 
 CreateThread(function()
     while true do
         if Config.UseServerTime then
             local realTime = os.date("*t")
-            setTime(realTime.hour, realTime.min)
+            SetTime(realTime.hour, realTime.min)
         end
         local currentMinute = state.time.minute
         local currentHour = state.time.hour
         local nextMinute = freezeTime and 0 or 1
-        setTime(currentHour, currentMinute + nextMinute)
+        SetTime(currentHour, currentMinute + nextMinute)
         Wait(baseTime or 8)
     end
 end)
@@ -79,5 +79,9 @@ RegisterNetEvent('qb-weathersync:ChangeTime', function(hour, minute)
 
     if not IsPlayerAceAllowed(src, 'command') then return end
 
-    setTime(tonumber(hour), tonumber(minute))
+    SetTime(tonumber(hour), tonumber(minute))
 end)
+
+function ToggleFreezeTime()
+    freezeTime = not freezeTime
+end

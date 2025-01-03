@@ -1,30 +1,35 @@
 -- Weather Commands
 RegisterCommand("weather", function(source, args)
     local weatherType = args[1]
-    if not weatherType and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
-        return TriggerClientEvent('qb-weathersync:WeatherMenu', source)
+    if not weatherType then
+        TriggerClientEvent("QBCore:Notify", source, "Usage: /weather [weatherType]", "error")
+        return
     end
 
-    local success, message = setWeather(weatherType)
+    local success, message = SetWeather(weatherType)
+    TriggerClientEvent("QBCore:Notify", source, message.message, success and "success" or "error")
 end, true)
 
 RegisterCommand("freezeweather", function(source, args)
-    freezeWeather = not freezeWeather
+    ToggleFreezeWeather()
 end, true)
 
 -- Time Commands
 RegisterCommand("time", function(source, args)
-    if not args[1] and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
-        return TriggerClientEvent('qb-weathersync:TimeInput', source)
-    end
-
     local hour = tonumber(args[1])
     local minute = tonumber(args[2])
-    setTime(hour, minute)
+
+    if not hour or not minute then
+        TriggerClientEvent("QBCore:Notify", source, "Invalid time format, use /time [hour] [minute]", "error")
+        return
+    end
+
+    local success, message = SetTime(hour, minute)
+    TriggerClientEvent("QBCore:Notify", source, message.message, success and "success" or "error")
 end, true)
 
 RegisterCommand("freezetime", function()
-    freezeTime = not freezeTime
+    ToggleFreezeTime()
 end, true)
 
 local times = {
@@ -36,12 +41,12 @@ local times = {
 
 for time, data in pairs(times) do
     RegisterCommand(time, function()
-        setTime(data.hour, data.minute)
+        SetTime(data.hour, data.minute)
     end, true)
 end
 
 -- Blackout Commands
 RegisterCommand("blackout", function(source, args)
     local enable = args[1] == "true" or args[1] == "1" or false
-    setBlackout(enable)
+    SetBlackout(enable)
 end, true)

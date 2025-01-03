@@ -20,7 +20,7 @@ end
 
 ---@param weatherType string
 ---@return boolean, {success: boolean, message: string}
-local function setWeather(weatherType)
+function SetWeather(weatherType)
 
     if freezeWeather then weatherType = state.weather.current end
 
@@ -37,7 +37,7 @@ local function setWeather(weatherType)
     return true, {success = true, message = "Weather changed to: " .. state.weather.current}
 end
 
-exports("setWeather", setWeather)
+exports("setWeather", SetWeather)
 
 ---@return string
 local function getRandomWeather()
@@ -50,7 +50,7 @@ CreateThread(function()
     local isDynamicWeather = Config.WeatherChangeEvery > 0
     while isDynamicWeather do
         local newWeather = getRandomWeather()
-        setWeather(newWeather)
+        SetWeather(newWeather)
 
         Wait(Config.WeatherChangeEvery * 60000)
     end
@@ -63,5 +63,10 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 
     if not IsPlayerAceAllowed(src, 'command') then return end
 
-    local success, message = setWeather(args.weatherType)
+    local success, message = SetWeather(args.weatherType)
 end)
+
+
+function ToggleFreezeWeather()
+    freezeWeather = not freezeWeather
+end
