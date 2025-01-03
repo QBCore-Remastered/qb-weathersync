@@ -10,12 +10,6 @@ state.time = {
     minute = 00,
 }
 
----@class Blackout
----@field enabled boolean
-state.blackout = {
-    enabled = Config.Blackout,
-}
-
 -- To ensure a value is between a min and max
 ---@param val number
 ---@param min number
