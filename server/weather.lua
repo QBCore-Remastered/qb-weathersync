@@ -55,19 +55,19 @@ CreateThread(function()
 end)
 
 RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
+
     local src = source
     if src == 0 then return end
 
-    if not IsPlayerAceAllowed(src, 'admin') then return end
+    if not IsPlayerAceAllowed(src, 'command') then return end
 
     local success, message = setWeather(args.weatherType)
 end)
 
 RegisterCommand("weather", function(source, args)
     local weatherType = args[1]
-    if not weatherType and source ~= 0 then
-        TriggerClientEvent('qb-weathersync:WeatherMenu', source)
-        return
+    if not weatherType and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
+        return TriggerClientEvent('qb-weathersync:WeatherMenu', source)
     end
 
     local success, message = setWeather(weatherType)

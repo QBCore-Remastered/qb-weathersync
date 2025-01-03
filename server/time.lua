@@ -83,15 +83,14 @@ RegisterNetEvent('qb-weathersync:ChangeTime', function(hour, minute)
     local src = source
     if src == 0 then return end
 
-    if not IsPlayerAceAllowed(src, 'admin') then return end
+    if not IsPlayerAceAllowed(src, 'command') then return end
 
     setTime(tonumber(hour), tonumber(minute))
 end)
 
 RegisterCommand("time", function(source, args)
-    if not args[1] and source ~= 0 then
-        TriggerClientEvent('qb-weathersync:TimeInput', source)
-        return
+    if not args[1] and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
+        return TriggerClientEvent('qb-weathersync:TimeInput', source)
     end
 
     local hour = tonumber(args[1])
