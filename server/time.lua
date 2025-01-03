@@ -52,12 +52,26 @@ local function setTime(hour, minute)
         isAfternoon = hour >= 12 and hour < 18,
         isEvening = hour >= 18 and hour < 23,
         isNight = hour >= 23 or hour < 6,
+        -- need to fix time frozen..
+        frozen = freezeTime,
     }
 
     return true, {success = true, message = "Time changed to: " .. state.time.hour .. ":" .. state.time.minute}
 end
 
 exports("setTime", setTime)
+
+local function freezeTime(bool)
+    if bool ~= nil then
+        freezeTime = bool
+        return 
+    end
+
+    -- toggle if true or false is not provided
+    freezeTime = not freezeTime
+end
+
+exports("freezeTime", freezeTime)
 
 CreateThread(function()
     while true do
