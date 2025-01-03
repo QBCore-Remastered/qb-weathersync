@@ -1,11 +1,5 @@
 local state = GlobalState
 
----@class Blackout
----@field enabled boolean
-state.blackout = {
-    enabled = Config.blackout,
-}
-
 state.blackout = Config.Blackout
 
 --- Toggles the blackout effect
