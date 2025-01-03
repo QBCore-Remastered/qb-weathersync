@@ -24,7 +24,6 @@ local function setBlackout(enabled)
 end
 
 local function setTime(hour, minute)
-    print("Setting time to: ", hour, minute)
     NetworkOverrideClockTime(hour, minute, 0)
 end
 
@@ -51,6 +50,58 @@ local function addStateHandlers()
         setTime(value.hour, value.minute)
     end)
 end
+
+
+RegisterNetEvent('qb-weathersync:TimeInput', function()
+    local input = exports['qb-input']:ShowInput({
+        header = "Time Selection",
+        submitText = "Enter Time",
+        inputs = {
+            {
+                text = "Hour",
+                name = "hour",
+                type = "number",
+                isRequired = true, 
+            },
+            {
+                text = "Minute",
+                name = "minute",
+                type = "number",
+                isRequired = true,
+            },
+        },
+    })
+
+    if input == nil then return end
+    TriggerServerEvent('qb-weathersync:ChangeTime', input.hour, input.minute)
+end)
+
+
+RegisterNetEvent('qb-weathersync:WeatherMenu', function()
+    local menuOptions = {}
+
+    menuOptions[#menuOptions+1] = {
+        isMenuHeader = true,
+        header = 'Weather Selection',
+        icon = 'fa-solid fa-cloud'
+    }
+
+    for k, v in pairs(Config.AvailableWeatherTypes) do
+        menuOptions[#menuOptions+1] = {
+            header = v,
+            txt = 'Set the weather to: '.. v,
+            params = {
+                event = 'qb-weathersync:ChangeWeather',
+                isServer = true,
+                args = {
+                    weatherType = v,
+                }
+            }
+        }
+    end
+
+    exports['qb-menu']:openMenu(menuOptions)
+end)
 
 addStateHandlers()
 

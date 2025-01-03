@@ -44,10 +44,6 @@ local function getRandomWeather()
     return Config.AvailableWeatherTypes[math.random(1, #Config.AvailableWeatherTypes)]
 end
 
-AddStateBagChangeHandler("weather", nil, function(_, _, value, _, replicated)
-    print("Weather changed to: ", value.current)
-end)
-
 CreateThread(function()
     local isDynamicWeather = Config.weatherChangeEvery > 0
     while isDynamicWeather do
@@ -58,15 +54,23 @@ CreateThread(function()
     end
 end)
 
+RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
+
+    local src = source
+    if src == 0 then return end
+
+    if not IsPlayerAceAllowed(src, 'command') then return end
+
+    local success, message = setWeather(args.weatherType)
+end)
+
 RegisterCommand("weather", function(source, args)
     local weatherType = args[1]
-    if not weatherType then
-        print("Usage: /weather [weatherType]")
-        return
+    if not weatherType and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
+        return TriggerClientEvent('qb-weathersync:WeatherMenu', source)
     end
 
     local success, message = setWeather(weatherType)
-    print(message.message)
 end, true)
 
 RegisterCommand("freezeWeather", function(source, args)

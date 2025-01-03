@@ -79,11 +79,20 @@ CreateThread(function()
     end
 end)
 
-AddStateBagChangeHandler("time", nil, function(_, _, value, _, replicated)
-    print("Time changed to: ", value.hour, ":", value.minute)
+RegisterNetEvent('qb-weathersync:ChangeTime', function(hour, minute)
+    local src = source
+    if src == 0 then return end
+
+    if not IsPlayerAceAllowed(src, 'command') then return end
+
+    setTime(tonumber(hour), tonumber(minute))
 end)
 
 RegisterCommand("time", function(source, args)
+    if not args[1] and source ~= 0 and IsPlayerAceAllowed(source, 'command') then
+        return TriggerClientEvent('qb-weathersync:TimeInput', source)
+    end
+
     local hour = tonumber(args[1])
     local minute = tonumber(args[2])
     setTime(hour, minute)
