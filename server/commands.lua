@@ -8,7 +8,7 @@ RegisterCommand("weather", function(source, args)
     local success, message = setWeather(weatherType)
 end, true)
 
-RegisterCommand("freezeWeather", function(source, args)
+RegisterCommand("freezeweather", function(source, args)
     freezeWeather = not freezeWeather
 end, true)
 
