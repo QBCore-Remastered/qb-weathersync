@@ -20,7 +20,7 @@ end
 
 ---@param weatherType string
 ---@return boolean, {success: boolean, message: string}
-local function setWeather(weatherType)
+function SetWeather(weatherType)
 
     if freezeWeather then weatherType = state.weather.current end
 
@@ -37,7 +37,11 @@ local function setWeather(weatherType)
     return true, {success = true, message = "Weather changed to: " .. state.weather.current}
 end
 
-exports("setWeather", setWeather)
+exports("SetWeather", SetWeather)
+
+function ToggleFreezeWeather()
+    freezeWeather = not freezeWeather
+end
 
 ---@return string
 local function getRandomWeather()
@@ -52,23 +56,8 @@ CreateThread(function()
     local isDynamicWeather = Config.weatherChangeEvery > 0
     while isDynamicWeather do
         local newWeather = getRandomWeather()
-        setWeather(newWeather)
+        SetWeather(newWeather)
 
         Wait(Config.weatherChangeEvery * 60000)
     end
 end)
-
-RegisterCommand("weather", function(source, args)
-    local weatherType = args[1]
-    if not weatherType then
-        print("Usage: /weather [weatherType]")
-        return
-    end
-
-    local success, message = setWeather(weatherType)
-    print(message.message)
-end, true)
-
-RegisterCommand("freezeWeather", function(source, args)
-    freezeWeather = not freezeWeather
-end, true)
