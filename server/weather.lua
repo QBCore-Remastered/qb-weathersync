@@ -56,6 +56,18 @@ CreateThread(function()
     end
 end)
 
+local function freezeWeather(bool)
+    if bool ~= nil then
+        freezeWeather = bool
+        return 
+    end
+
+    -- toggle if true or false is not provided
+    freezeWeather = not freezeWeather
+end
+
+exports("freezeWeather", freezeWeather)
+
 RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 
     local src = source

@@ -18,7 +18,7 @@ RegisterCommand("weather", function(source, args)
 end, true)
 
 RegisterCommand("freezeweather", function(source, args)
-    freezeWeather = not freezeWeather
+    weather:freezeWeather(booleans[args[1]])
 end, true)
 
 -- Time Commands
