@@ -20,7 +20,7 @@ end
 
 local function setBlackout(enabled)
     SetArtificialLightsState(enabled)
-    SetArtificialLightsStateAffectsVehicles(enabled and Config.blackoutAffectsVehicles or false)
+    SetArtificialLightsStateAffectsVehicles(enabled and Config.BlackoutAffectsVehicles or false)
 end
 
 local function setTime(hour, minute)

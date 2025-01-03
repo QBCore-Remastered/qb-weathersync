@@ -1,6 +1,6 @@
 local state = GlobalState
-local baseTime = Config.howManySecondsForAnInGameMinute * 1000
-local freezeTime = Config.freezeTime or false
+local baseTime = Config.RealSecondsIGMinutes * 1000
+local freezeTime = Config.FreezeTime or false
 
 ---@class Time
 ---@field hour number
@@ -13,7 +13,7 @@ state.time = {
 ---@class Blackout
 ---@field enabled boolean
 state.blackout = {
-    enabled = Config.blackout,
+    enabled = Config.Blackout,
 }
 
 -- To ensure a value is between a min and max
@@ -47,7 +47,7 @@ local function setTime(hour, minute)
 
     if not isValidNumber(hour, "hour") then return false, {success = false, message = "Invalid hour type"} end
     if not isValidNumber(minute, "minute") then return false, {success = false, message = "Invalid minute type"} end
-    
+
     if minute > 59 then minute = 0; hour = hour + 1 end
     if hour > 23 then hour = 0 end
 
@@ -67,7 +67,7 @@ exports("setTime", setTime)
 
 CreateThread(function()
     while true do
-        if Config.useServerTime then
+        if Config.UseServerTime then
             local realTime = os.date("*t")
             setTime(realTime.hour, realTime.min)
         end
