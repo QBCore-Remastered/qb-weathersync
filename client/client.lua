@@ -123,3 +123,28 @@ addStateHandlers()
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', addStateHandlers)
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', removeStateHandlers)
+
+TriggerEvent("chat:addSuggestion", "/weather", "Change the weather.", {
+    { name = "weathertype", help = "Available types: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween" }
+})
+
+TriggerEvent("chat:addSuggestion", "/freezeweather", "Enable/disable dynamic weather changes.", {
+    { name = "true/false", help = "Enable or disable dynamic weather changes." }
+})
+
+TriggerEvent("chat:addSuggestion", "/time", "Change the time.", {
+    { name = "hours", help = "A number between 0 - 23" },
+    { name = "minutes", help = "A number between 0 - 59" }
+})
+
+TriggerEvent("chat:addSuggestion", "/freezetime", "Freeze / unfreeze time.", {
+    { name = "true/false", help = "Freeze or unfreeze time." }
+})
+
+TriggerEvent("chat:addSuggestion", "/blackout", "Toggle blackout mode.", {
+    { name = "true/false", help = "Enable or disable blackout mode." }
+})
+
+for time, data in pairs(Config.PredefinedTimes) do
+    TriggerEvent("chat:addSuggestion", "/"..time, data.help, {})
+end

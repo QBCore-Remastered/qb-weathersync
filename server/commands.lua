@@ -44,14 +44,7 @@ RegisterCommand("freezetime", function(source, args)
     notify(source, "Time is now " .. (frozen and "frozen" or "unfrozen"), "primary", 5000)
 end, true)
 
-local times = {
-    morning = {hour = 9, minute = 0},
-    noon = {hour = 12, minute = 0},
-    evening = {hour = 18, minute = 0},
-    night = {hour = 23, minute = 0},
-}
-
-for time, data in pairs(times) do
+for time, data in pairs(Config.PredefinedTimes) do
     RegisterCommand(time, function()
         local success, message = weather:setTime(data.hour, data.minute)
         notify(source, message.message, message.success and "success" or "error", 5000)
