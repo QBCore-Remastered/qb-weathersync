@@ -51,16 +51,16 @@ end
 local function addStateHandlers()
     removeStateHandlers()
 
-    stateBagHandlers.weather = AddStateBagChangeHandler("weather", nil, function(_, _, value, _, replicated)
+    stateBagHandlers.weather = AddStateBagChangeHandler('weather', nil, function(_, _, value, _, replicated)
         if replicated then return end
         setWeather(value.current)
     end)
 
-    stateBagHandlers.blackout = AddStateBagChangeHandler("blackout", nil, function(_, _, value, _, replicated)
+    stateBagHandlers.blackout = AddStateBagChangeHandler('blackout', nil, function(_, _, value, _, replicated)
         if replicated then return end
         setBlackout(value)
     end)
-    stateBagHandlers.time = AddStateBagChangeHandler("time", nil, function(_, _, value, _, replicated)
+    stateBagHandlers.time = AddStateBagChangeHandler('time', nil, function(_, _, value, _, replicated)
         if replicated then return end
         setTime(value.hour, value.minute)
         startFreezeThread()
@@ -70,19 +70,19 @@ end
 
 RegisterNetEvent('qb-weathersync:TimeInput', function()
     local input = exports['qb-input']:ShowInput({
-        header = "Time Selection",
-        submitText = "Enter Time",
+        header = 'Time Selection',
+        submitText = 'Enter Time',
         inputs = {
             {
-                text = "Hour",
-                name = "hour",
-                type = "number",
+                text = 'Hour',
+                name = 'hour',
+                type = 'number',
                 isRequired = true, 
             },
             {
-                text = "Minute",
-                name = "minute",
-                type = "number",
+                text = 'Minute',
+                name = 'minute',
+                type = 'number',
                 isRequired = true,
             },
         },
@@ -124,27 +124,27 @@ addStateHandlers()
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', addStateHandlers)
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', removeStateHandlers)
 
-TriggerEvent("chat:addSuggestion", "/weather", "Change the weather.", {
-    { name = "weathertype", help = "Available types: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween" }
+TriggerEvent('chat:addSuggestion', '/weather', 'Change the weather.', {
+    { name = 'weathertype', help = 'Available types: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween' }
 })
 
-TriggerEvent("chat:addSuggestion", "/freezeweather", "Enable/disable dynamic weather changes.", {
-    { name = "true/false", help = "Enable or disable dynamic weather changes." }
+TriggerEvent('chat:addSuggestion', '/freezeweather', 'Enable/disable dynamic weather changes.', {
+    { name = 'true/false', help = 'Enable or disable dynamic weather changes.' }
 })
 
-TriggerEvent("chat:addSuggestion", "/time", "Change the time.", {
-    { name = "hours", help = "A number between 0 - 23" },
-    { name = "minutes", help = "A number between 0 - 59" }
+TriggerEvent('chat:addSuggestion', '/time', 'Change the time.', {
+    { name = 'hours', help = 'A number between 0 - 23' },
+    { name = 'minutes', help = 'A number between 0 - 59' }
 })
 
-TriggerEvent("chat:addSuggestion", "/freezetime", "Freeze / unfreeze time.", {
-    { name = "true/false", help = "Freeze or unfreeze time." }
+TriggerEvent('chat:addSuggestion', '/freezetime', 'Freeze / unfreeze time.', {
+    { name = 'true/false', help = 'Freeze or unfreeze time.' }
 })
 
-TriggerEvent("chat:addSuggestion", "/blackout", "Toggle blackout mode.", {
-    { name = "true/false", help = "Enable or disable blackout mode." }
+TriggerEvent('chat:addSuggestion', '/blackout', 'Toggle blackout mode.', {
+    { name = 'true/false', help = 'Enable or disable blackout mode.' }
 })
 
 for time, data in pairs(Config.PredefinedTimes) do
-    TriggerEvent("chat:addSuggestion", "/"..time, data.help, {})
+    TriggerEvent('chat:addSuggestion', '/'..time, data.help, {})
 end

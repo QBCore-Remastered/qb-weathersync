@@ -10,15 +10,15 @@ Config.BlackoutAffectsVehicles         = false
 Config.UseServerTime                   = false          -- Sync game time with servers OS time
 
 Config.NextWeatherLogic = {
-    ["CLEAR"] = { "CLEARING", "OVERCAST" },
-    ["CLOUDS"] = { "CLEARING", "OVERCAST" },
-    ["EXTRASUNNY"] = { "CLEARING", "OVERCAST" },
-    ["CLEARING"] = { "FOGGY", "CLOUDS", "CLEAR", "EXTRASUNNY", "SMOG", "FOGGY" },
-    ["OVERCAST"] = { "RAIN", "CLOUDS", "CLEAR", "EXTRASUNNY", "SMOG", "FOGGY" },
-    ["THUNDER"] = { "CLEARING" },
-    ["RAIN"] = { "CLEARING" },
-    ["SMOG"] = { "CLEAR" },
-    ["FOGGY"] = { "CLEAR" }
+    ['CLEAR'] = { 'CLEARING', 'OVERCAST' },
+    ['CLOUDS'] = { 'CLEARING', 'OVERCAST' },
+    ['EXTRASUNNY'] = { 'CLEARING', 'OVERCAST' },
+    ['CLEARING'] = { 'FOGGY', 'CLOUDS', 'CLEAR', 'EXTRASUNNY', 'SMOG', 'FOGGY' },
+    ['OVERCAST'] = { 'RAIN', 'CLOUDS', 'CLEAR', 'EXTRASUNNY', 'SMOG', 'FOGGY' },
+    ['THUNDER'] = { 'CLEARING' },
+    ['RAIN'] = { 'CLEARING' },
+    ['SMOG'] = { 'CLEAR' },
+    ['FOGGY'] = { 'CLEAR' }
 }
 
 Config.PredefinedTimes = {
