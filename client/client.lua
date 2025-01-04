@@ -61,7 +61,6 @@ local function addStateHandlers()
         setBlackout(value)
     end)
     stateBagHandlers.time = AddStateBagChangeHandler("time", nil, function(_, _, value, _, replicated)
-        print(value, "time")
         if replicated then return end
         setTime(value.hour, value.minute)
         startFreezeThread()
