@@ -1,3 +1,6 @@
+local state = GlobalState
+local timeFrozen = false
+
 local stateBagHandlers = {}
 
 local rainLevels = {
@@ -33,6 +36,18 @@ local function removeStateHandlers()
     end
 end
 
+local function startFreezeThread()
+    if timeFrozen then return end
+
+    timeFrozen = true
+    CreateThread(function()
+        while timeFrozen do
+            setTime(state.time.hour, state.time.minute)
+            Wait(500)
+        end
+    end)
+end
+
 local function addStateHandlers()
     removeStateHandlers()
 
@@ -46,8 +61,10 @@ local function addStateHandlers()
         setBlackout(value)
     end)
     stateBagHandlers.time = AddStateBagChangeHandler("time", nil, function(_, _, value, _, replicated)
+        print(value, "time")
         if replicated then return end
         setTime(value.hour, value.minute)
+        startFreezeThread()
     end)
 end
 

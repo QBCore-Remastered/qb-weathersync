@@ -6,6 +6,7 @@ state.blackout = Config.Blackout
 ---@param enabled boolean
 local function setBlackout(enabled)
     state.blackout = enabled
+    return state.blackout
 end
 
 exports("setBlackout", setBlackout)

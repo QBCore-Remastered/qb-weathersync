@@ -64,6 +64,7 @@ local function freezeWeather(bool)
 
     -- toggle if true or false is not provided
     weatherFrozen = not weatherFrozen
+    return weatherFrozen
 end
 
 exports("freezeWeather", freezeWeather)

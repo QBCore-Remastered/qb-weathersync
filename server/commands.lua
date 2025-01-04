@@ -1,5 +1,9 @@
 local weather = exports['qb-weathersync']
 
+local function notify(id, message, message_type, duration)
+    TriggerClientEvent('QBCore:Notify', id, message, message_type, duration)
+end
+
 local booleans = {
     ["true"] = true,
     ["false"] = false,
@@ -15,10 +19,12 @@ RegisterCommand("weather", function(source, args)
     end
 
     local success, message = weather:setWeather(weatherType)
+    notify(source, message.message, message.success and "success" or "error", 5000)
 end, true)
 
 RegisterCommand("freezeweather", function(source, args)
-    weather:freezeWeather(booleans[args[1]])
+    local frozen = weather:freezeWeather(booleans[args[1]])
+    notify(source, "Weather is now " .. (frozen and "frozen" or "unfrozen"), "primary", 5000)
 end, true)
 
 -- Time Commands
@@ -29,11 +35,13 @@ RegisterCommand("time", function(source, args)
 
     local hour = tonumber(args[1])
     local minute = tonumber(args[2])
-    weather:setTime(hour, minute)
+    local success, message = weather:setTime(hour, minute)
+    notify(source, message.message, message.success and "success" or "error", 5000)
 end, true)
 
 RegisterCommand("freezetime", function(source, args)
-    weather:freezeTime(booleans[args[1]])
+    local frozen = weather:freezeTime(booleans[args[1]])
+    notify(source, "Time is now " .. (frozen and "frozen" or "unfrozen"), "primary", 5000)
 end, true)
 
 local times = {
@@ -45,11 +53,13 @@ local times = {
 
 for time, data in pairs(times) do
     RegisterCommand(time, function()
-        weather:setTime(data.hour, data.minute)
+        local success, message = weather:setTime(data.hour, data.minute)
+        notify(source, message.message, message.success and "success" or "error", 5000)
     end, true)
 end
 
 -- Blackout Commands
 RegisterCommand("blackout", function(source, args)
-    weather:setBlackout(booleans[args[1]] or false)
+    local blackout = weather:setBlackout(booleans[args[1]] or false)
+    notify(source, "Blackout is now " .. (blackout and "enabled" or "disabled"), "primary", 5000)
 end, true)

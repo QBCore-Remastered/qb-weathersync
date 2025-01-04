@@ -52,7 +52,6 @@ local function setTime(hour, minute)
         isAfternoon = hour >= 12 and hour < 18,
         isEvening = hour >= 18 and hour < 23,
         isNight = hour >= 23 or hour < 6,
-        -- need to fix time frozen..
         frozen = timeFrozen,
     }
 
@@ -67,8 +66,8 @@ local function freezeTime(bool)
         return 
     end
 
-    -- toggle if true or false is not provided
     timeFrozen = not timeFrozen
+    return timeFrozen
 end
 
 exports("freezeTime", freezeTime)
