@@ -9,7 +9,7 @@ end
 ---@class Weather
 ---@field current 'EXTRASUNNY' | 'CLEAR' | 'NEUTRAL' | 'SMOG' | 'FOGGY' | 'OVERCAST' | 'CLOUDS' | 'CLEARING' | 'RAIN' | 'THUNDER' | 'SNOW' | 'BLIZZARD' | 'SNOWLIGHT' | 'XMAS' | 'HALLOWEEN' | 
 state.weather = {
-    current = Config.StartWeather or "EXTRASUNNY",
+    current = Config.StartWeather or 'EXTRASUNNY',
 }
 
 ---@param weatherType string
@@ -27,23 +27,23 @@ local function setWeather(weatherType)
     weatherType = string.upper(weatherType)
 
     if not isValidWeatherType(weatherType) then
-        return false, {success = false, message = "Invalid weather type"}
+        return false, {success = false, message = 'Invalid weather type'}
     end
 
     state.weather = {
         current = weatherType
     }
 
-    return true, {success = true, message = "Weather changed to: " .. state.weather.current}
+    return true, {success = true, message = 'Weather changed to: ' .. state.weather.current}
 end
 
-exports("setWeather", setWeather)
+exports('setWeather', setWeather)
 
 ---@return string
 local function getRandomWeather()
     local current = Config.NextWeatherLogic[state.weather.current]
-    if not current then return "CLEAR" end
-    return current[math.random(#current)] or "CLEAR"
+    if not current then return 'CLEAR' end
+    return current[math.random(#current)] or 'CLEAR'
 end
 
 CreateThread(function()
@@ -59,7 +59,7 @@ end)
 local function freezeWeather(bool)
     if bool ~= nil then
         weatherFrozen = bool
-        return 
+        return
     end
 
     -- toggle if true or false is not provided
@@ -67,7 +67,7 @@ local function freezeWeather(bool)
     return weatherFrozen
 end
 
-exports("freezeWeather", freezeWeather)
+exports('freezeWeather', freezeWeather)
 
 RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 

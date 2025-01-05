@@ -9,6 +9,4 @@ local function setBlackout(enabled)
     return state.blackout
 end
 
-exports("setBlackout", setBlackout)
-
-
+exports('setBlackout', setBlackout)
