@@ -27,14 +27,14 @@ local function setWeather(weatherType)
     weatherType = string.upper(weatherType)
 
     if not isValidWeatherType(weatherType) then
-        return false, {success = false, message = 'Invalid weather type'}
+        return false, {success = false, message = Lang:t('weather.invalid')}
     end
 
     state.weather = {
         current = weatherType
     }
 
-    return true, {success = true, message = 'Weather changed to: ' .. state.weather.current}
+    return true, {success = true, message = Lang:t('weather.willchangeto', {weather = state.weather.current})}
 end
 
 exports('setWeather', setWeather)
@@ -76,5 +76,5 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 
     if not IsPlayerAceAllowed(src, 'command') then return end
 
-    local success, message = setWeather(args.weatherType)
+    setWeather(args.weatherType)
 end)
