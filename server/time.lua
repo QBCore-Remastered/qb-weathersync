@@ -26,8 +26,8 @@ end
 ---@return boolean
 local function isValidNumber(value, name)
     local valueType = type(value)
-    if not (valueType == "number") then
-        warn("Invalid argument to ", name, ". number expected, got: ", valueType)
+    if not (valueType == 'number') then
+        warn('Invalid argument to ', name, '. number expected, got: ', valueType)
         return false
     end
     return true
@@ -39,8 +39,8 @@ end
 ---@return boolean, {success: boolean, message: string}
 local function setTime(hour, minute)
 
-    if not isValidNumber(hour, "hour") then return false, {success = false, message = Lang:t('time.invalidh')} end
-    if not isValidNumber(minute, "minute") then return false, {success = false, message = Lang:t('time.invalidm')} end
+    if not isValidNumber(hour, 'hour') then return false, {success = false, message = Lang:t('time.invalidh')} end
+    if not isValidNumber(minute, 'minute') then return false, {success = false, message = Lang:t('time.invalidm')} end
 
     if minute > 59 then minute = 0; hour = hour + 1 end
     if hour > 23 then hour = 0 end
@@ -58,7 +58,7 @@ local function setTime(hour, minute)
     return true, {success = true, message = Lang:t('time', {hour = state.time.hour, minute = state.time.minute})}
 end
 
-exports("setTime", setTime)
+exports('setTime', setTime)
 
 local function freezeTime(bool)
     if bool ~= nil then
@@ -70,12 +70,12 @@ local function freezeTime(bool)
     return timeFrozen
 end
 
-exports("freezeTime", freezeTime)
+exports('freezeTime', freezeTime)
 
 CreateThread(function()
     while true do
         if Config.UseServerTime then
-            local realTime = os.date("*t")
+            local realTime = os.date('*t')
             local hour = tonumber(realTime.hour)
             local minute = tonumber(realTime.min)
 
