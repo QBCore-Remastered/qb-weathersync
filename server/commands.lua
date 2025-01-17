@@ -19,12 +19,13 @@ RegisterCommand('weather', function(source, args)
     end
 
     local success, message = weather:setWeather(weatherType)
-    notify(source, message.message, message.success and 'success' or 'error', 5000)
+    notify(source, message.message, success and 'success' or 'error', 5000)
 end, true)
 
 RegisterCommand('freezeweather', function(source, args)
     local frozen = weather:freezeWeather(booleans[args[1]])
-    notify(source, 'Weather is now ' .. (frozen and 'frozen' or 'unfrozen'), 'primary', 5000)
+    if frozen then return notify(source, Lang:t('weather.now_frozen'), 'primary', 5000) end
+    notify(source, Lang:t('weather.now_unfrozen'), 'primary', 5000)
 end, true)
 
 -- Time Commands
@@ -36,23 +37,25 @@ RegisterCommand('time', function(source, args)
     local hour = tonumber(args[1])
     local minute = tonumber(args[2])
     local success, message = weather:setTime(hour, minute)
-    notify(source, message.message, message.success and 'success' or 'error', 5000)
+    notify(source, message.message, success and 'success' or 'error', 5000)
 end, true)
 
 RegisterCommand('freezetime', function(source, args)
     local frozen = weather:freezeTime(booleans[args[1]])
-    notify(source, 'Time is now ' .. (frozen and 'frozen' or 'unfrozen'), 'primary', 5000)
+    if frozen then return notify(source, Lang:t('time.now_frozen'), 'primary', 5000) end
+    notify(source, Lang:t('time.now_unfrozen'), 'primary', 5000)
 end, true)
 
 for time, data in pairs(Config.PredefinedTimes) do
     RegisterCommand(time, function()
         local success, message = weather:setTime(data.hour, data.minute)
-        notify(source, message.message, message.success and 'success' or 'error', 5000)
+        notify(source, message.message, success and 'success' or 'error', 5000)
     end, true)
 end
 
 -- Blackout Commands
 RegisterCommand('blackout', function(source, args)
     local blackout = weather:setBlackout(booleans[args[1]] or false)
-    notify(source, 'Blackout is now ' .. (blackout and 'enabled' or 'disabled'), 'primary', 5000)
+    if blackout then return notify(source, Lang:t('blackout.enabled'), 'primary', 5000) end
+    notify(source, Lang:t('blackout.disabled'), 'primary', 5000)
 end, true)
