@@ -22,10 +22,10 @@ Config.NextWeatherLogic = {
 }
 
 Config.PredefinedTimes = {
-    morning   = { hour = 9,  minute = 0, help = 'Set the time to 09:00' },
-    noon      = { hour = 12, minute = 0, help = 'Set the time to 12:00' },
-    evening   = { hour = 18, minute = 0, help = 'Set the time to 18:00' },
-    night     = { hour = 23, minute = 0, help = 'Set the time to 23:00' },
+    morning   = { hour = 9,  minute = 0, help = Lang:t('help.morningcommand') },
+    noon      = { hour = 12, minute = 0, help = Lang:t('help.nooncommand') },
+    evening   = { hour = 18, minute = 0, help = Lang:t('help.eveningcommand') },
+    night     = { hour = 23, minute = 0, help = Lang:t('help.nightcommand') },
 }
 
 Config.AvailableWeatherTypes = { -- DON'T TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING
