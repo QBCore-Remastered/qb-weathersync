@@ -2,7 +2,7 @@ Config = Config or {}
 
 Config.WeatherChangeEvery              = 10             -- Time in minutes, set to 0 to disable
 Config.StartingWeather                 = 'EXTRASUNNY'   -- See below for other options
-Config.RealSecondsIGMinutes = 8
+Config.RealSecondsIGMinutes            = 8
 Config.FreezeTime                      = false
 Config.FreezeWeather                   = false
 Config.Blackout                        = false
