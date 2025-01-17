@@ -55,7 +55,7 @@ local function setTime(hour, minute)
         frozen = timeFrozen,
     }
 
-    return true, {success = true, message = Lang:t('time', {hour = state.time.hour, minute = state.time.minute})}
+    return true, {success = true, message = Lang:t('time.change', {hour = state.time.hour, minute = state.time.minute})}
 end
 
 exports('setTime', setTime)
