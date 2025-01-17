@@ -22,8 +22,8 @@ local Translations = {
         disabled = 'El apagón ahora está deshabilitado.',
     },
     help = {
-        weathercommand = 'Change the weather.',
-        weathertype = 'weathertype',
+        weathercommand = 'Cambia el clima.',
+        weathertype = 'tipo',
         availableweather = 'Tipos disponibles: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween',
         timecommand = 'Cambiar el tiempo.',
         timehname = 'Hora',
