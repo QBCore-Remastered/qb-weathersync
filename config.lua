@@ -1,13 +1,14 @@
 Config = Config or {}
 
-Config.WeatherChangeEvery              = 10             -- Time in minutes, set to 0 to disable
-Config.StartingWeather                 = 'EXTRASUNNY'   -- See below for other options
+Config.WeatherChangeEvery              = 10                      -- Time in minutes, set to 0 to disable
+Config.StartingWeather                 = 'EXTRASUNNY'            -- See below for other options
+Config.StartingTime                    = {hour = 12, minute = 0} -- Time to start the resource
 Config.RealSecondsIGMinutes = 8
 Config.FreezeTime                      = false
 Config.FreezeWeather                   = false
 Config.Blackout                        = false
 Config.BlackoutAffectsVehicles         = false
-Config.UseServerTime                   = false          -- Sync game time with servers OS time
+Config.UseServerTime                   = false                   -- Sync game time with servers OS time
 
 Config.NextWeatherLogic = {
     ['CLEAR'] = { 'CLEARING', 'OVERCAST' },
