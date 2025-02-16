@@ -75,12 +75,15 @@ function WeatherThread()
     weatherThreads[id] = true
 
     Citizen.CreateThreadNow(function()
-        local newWeather = getRandomWeather()
-        setWeather(newWeather)
-
         Wait(Config.WeatherChangeEvery * 60000)
 
-        if weatherThreads[id] then WeatherThread() end
+        if not weatherThreads[id] then
+            weatherThreads[id] = nil
+            return
+        end
+
+        local newWeather = getRandomWeather()
+        setWeather(newWeather)
     end)
 end
 
