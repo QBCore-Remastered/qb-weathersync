@@ -107,4 +107,4 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
     local success, message = setWeather(args.weatherType)
 end)
 
-weatherThread()
+WeatherThread()
