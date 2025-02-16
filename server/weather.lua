@@ -1,6 +1,7 @@
 local state = GlobalState
 local weatherFrozen = Config.FreezeWeather or false
 local validWeatherTypes = {}
+local currentWeatherThread = nil
 
 for _, validWeatherType in pairs(Config.AvailableWeatherTypes) do
     validWeatherTypes[validWeatherType] = true
@@ -34,6 +35,8 @@ local function setWeather(weatherType)
         current = weatherType
     }
 
+    WeatherThread()
+
     return true, {success = true, message = 'Weather changed to: ' .. state.weather.current}
 end
 
@@ -46,15 +49,18 @@ local function getRandomWeather()
     return current[math.random(#current)] or 'CLEAR'
 end
 
-CreateThread(function()
-    local isDynamicWeather = Config.WeatherChangeEvery > 0
-    while isDynamicWeather do
-        local newWeather = getRandomWeather()
-        setWeather(newWeather)
+function WeatherThread()
+    if currentWeatherThread then Citizen.TerminateThread(currentWeatherThread) end
+    currentWeatherThread = Citizen.CreateThreadNow(function()
+        local isDynamicWeather = Config.WeatherChangeEvery > 0
+        while isDynamicWeather do
+            local newWeather = getRandomWeather()
+            setWeather(newWeather)
 
-        Wait(Config.WeatherChangeEvery * 60000)
-    end
-end)
+            Wait(Config.WeatherChangeEvery * 60000)
+        end
+    end)
+end
 
 local function freezeWeather(bool)
     if bool ~= nil then
@@ -78,3 +84,5 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
 
     local success, message = setWeather(args.weatherType)
 end)
+
+weatherThread()
