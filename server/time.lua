@@ -6,8 +6,8 @@ local timeFrozen = Config.FreezeTime or false
 ---@field hour number
 ---@field minute number
 state.time = {
-    hour = 00,
-    minute = 00,
+    hour = Config.StartingTime.hour or 0,
+    minute = Config.StartingTime.minute or 0,
 }
 
 -- To ensure a value is between a min and max
