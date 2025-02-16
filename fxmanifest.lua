@@ -12,6 +12,7 @@ shared_scripts {
 }
 
 server_scripts {
+    'env.lua',
     'server/*.lua'
 }
 

@@ -1,3 +1,18 @@
+print("HERE")
+
+if Config.UseRealWeather.enabled then
+    local city = Config.UseRealWeather.city
+    local country = Config.UseRealWeather.country
+    local key = Config.WeatherAPI.key
+    local map = Config.WeatherAPI.map
+
+    print('Getting weather for: ' .. city .. ', ' .. country)
+
+    local weather = Config.WeatherAPI.getWeather(city, country, key, map)
+    print('Weather: ', weather)
+end
+
+
 local state = GlobalState
 local weatherFrozen = Config.FreezeWeather or false
 local validWeatherTypes = {}
@@ -11,6 +26,7 @@ end
 ---@field current 'EXTRASUNNY' | 'CLEAR' | 'NEUTRAL' | 'SMOG' | 'FOGGY' | 'OVERCAST' | 'CLOUDS' | 'CLEARING' | 'RAIN' | 'THUNDER' | 'SNOW' | 'BLIZZARD' | 'SNOWLIGHT' | 'XMAS' | 'HALLOWEEN' | 
 state.weather = {
     current = Config.StartWeather or 'EXTRASUNNY',
+    lastChanged = 0,
 }
 
 ---@param weatherType string
@@ -32,7 +48,8 @@ local function setWeather(weatherType)
     end
 
     state.weather = {
-        current = weatherType
+        current = weatherType,
+        lastChanged = GetGameTimer(),
     }
 
     weatherThreads[#weatherThreads] = false
