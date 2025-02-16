@@ -1,7 +1,7 @@
 local state = GlobalState
 local weatherFrozen = Config.FreezeWeather or false
 local validWeatherTypes = {}
-local currentWeatherThread = nil
+local weatherThreads = {}
 
 for _, validWeatherType in pairs(Config.AvailableWeatherTypes) do
     validWeatherTypes[validWeatherType] = true
@@ -35,6 +35,7 @@ local function setWeather(weatherType)
         current = weatherType
     }
 
+    weatherThreads[#weatherThreads] = false
     WeatherThread()
 
     return true, {success = true, message = 'Weather changed to: ' .. state.weather.current}
@@ -50,15 +51,19 @@ local function getRandomWeather()
 end
 
 function WeatherThread()
-    if currentWeatherThread then Citizen.TerminateThread(currentWeatherThread) end
-    currentWeatherThread = Citizen.CreateThreadNow(function()
-        local isDynamicWeather = Config.WeatherChangeEvery > 0
-        while isDynamicWeather do
-            local newWeather = getRandomWeather()
-            setWeather(newWeather)
+    local isDynamicWeather = Config.WeatherChangeEvery > 0
+    if not isDynamicWeather then return end
 
-            Wait(Config.WeatherChangeEvery * 60000)
-        end
+    local id = #weatherThreads+1
+    weatherThreads[id] = true
+
+    Citizen.CreateThreadNow(function()
+        local newWeather = getRandomWeather()
+        setWeather(newWeather)
+
+        Wait(Config.WeatherChangeEvery * 60000)
+
+        if weatherThreads[id] then WeatherThread() end
     end)
 end
 
