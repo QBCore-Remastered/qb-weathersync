@@ -1,7 +1,7 @@
 Config = Config or {}
 
 Config.WeatherAPI = {
-    key = "5bc5a681a79402cd8c98beb8ee7f8749", -- Enter your own key here
+    key = "", -- Enter your own key here
 ---@type table<"Thunderstorm" | "Drizzle" | "Rain" | "Snow" | "Clear" | "Clouds" | "Mist" | "Smoke" | "Haze" | "Dust" | "Fog" | "Sand" | "Ash" | "Squall" | "Tornado", 'EXTRASUNNY' | 'CLEAR' | 'NEUTRAL' | 'SMOG' | 'FOGGY' | 'OVERCAST' | 'CLOUDS' | 'CLEARING' | 'RAIN' | 'THUNDER' | 'SNOW' | 'BLIZZARD' | 'SNOWLIGHT' | 'XMAS' | 'HALLOWEEN'>
     map = {
         default = "EXTRASUNNY",
