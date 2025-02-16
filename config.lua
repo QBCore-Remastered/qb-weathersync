@@ -9,6 +9,11 @@ Config.FreezeWeather                   = false
 Config.Blackout                        = false
 Config.BlackoutAffectsVehicles         = false
 Config.UseServerTime                   = false                   -- Sync game time with servers OS time
+Config.UseRealWeather                  = {
+    enabled = true,
+    country = "US",
+    city = "Snowdon"
+}
 
 Config.NextWeatherLogic = {
     ['CLEAR'] = { 'CLEARING', 'OVERCAST' },

@@ -76,7 +76,7 @@ CreateThread(function()
     while true do
         if Config.UseServerTime then
             local realTime = os.date("*t")
-            setTime(realTime.hour, realTime.min)
+            setTime(tonumber(realTime.hour), tonumber(realTime.min))
         end
         local currentMinute = state.time.minute
         local currentHour = state.time.hour
