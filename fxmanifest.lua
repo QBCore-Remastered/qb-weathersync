@@ -6,9 +6,9 @@ description 'Syncs the time & weather for all players on the server and allows e
 version '2.1.0'
 
 shared_scripts {
-    'config.lua',
     '@qb-core/shared/locale.lua',
-    'locales/*.lua'
+    'locales/*.lua',
+    'config.lua'
 }
 
 server_scripts {

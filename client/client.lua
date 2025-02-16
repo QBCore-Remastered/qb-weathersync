@@ -70,17 +70,17 @@ end
 
 RegisterNetEvent('qb-weathersync:TimeInput', function()
     local input = exports['qb-input']:ShowInput({
-        header = 'Time Selection',
-        submitText = 'Enter Time',
+        header = Lang:t('menu.timeselection'),
+        submitText = Lang:t('menu.timesubmit'),
         inputs = {
             {
-                text = 'Hour',
+                text = Lang:t('menu.hour'),
                 name = 'hour',
                 type = 'number',
-                isRequired = true, 
+                isRequired = true,
             },
             {
-                text = 'Minute',
+                text = Lang:t('menu.minute'),
                 name = 'minute',
                 type = 'number',
                 isRequired = true,
@@ -98,14 +98,14 @@ RegisterNetEvent('qb-weathersync:WeatherMenu', function()
 
     menuOptions[#menuOptions+1] = {
         isMenuHeader = true,
-        header = 'Weather Selection',
+        header = Lang:t('menu.weatherselection'),
         icon = 'fa-solid fa-cloud'
     }
 
     for k, v in pairs(Config.AvailableWeatherTypes) do
         menuOptions[#menuOptions+1] = {
             header = v,
-            txt = 'Set the weather to: '.. v,
+            txt = Lang:t('menu.setweather', { value = v }),
             params = {
                 event = 'qb-weathersync:ChangeWeather',
                 isServer = true,
@@ -124,25 +124,25 @@ addStateHandlers()
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', addStateHandlers)
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', removeStateHandlers)
 
-TriggerEvent('chat:addSuggestion', '/weather', 'Change the weather.', {
-    { name = 'weathertype', help = 'Available types: extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas & halloween' }
+TriggerEvent('chat:addSuggestion', '/weather', Lang:t('help.weathercommand'), {
+    { name = Lang:t('help.weathertype'), help = Lang:t('help.availableweather') }
 })
 
-TriggerEvent('chat:addSuggestion', '/freezeweather', 'Enable/disable dynamic weather changes.', {
-    { name = 'true/false', help = 'Enable or disable dynamic weather changes.' }
+TriggerEvent('chat:addSuggestion', '/freezeweather', Lang:t('help.freezeweathercommand'), {
+    { name = Lang:t('help.truefalse'), help = Lang:t('help.freezeweathercommand') }
 })
 
-TriggerEvent('chat:addSuggestion', '/time', 'Change the time.', {
-    { name = 'hours', help = 'A number between 0 - 23' },
-    { name = 'minutes', help = 'A number between 0 - 59' }
+TriggerEvent('chat:addSuggestion', '/time', Lang:t('help.timecommand'), {
+    { name = Lang:t('help.timehname'), help = Lang:t('help.timeh') },
+    { name = Lang:t('help.timemname'), help = Lang:t('help.timem') }
 })
 
-TriggerEvent('chat:addSuggestion', '/freezetime', 'Freeze / unfreeze time.', {
-    { name = 'true/false', help = 'Freeze or unfreeze time.' }
+TriggerEvent('chat:addSuggestion', '/freezetime', Lang:t('help.freezecommand'), {
+    { name = Lang:t('help.truefalse'), help = Lang:t('help.freezecommand') }
 })
 
-TriggerEvent('chat:addSuggestion', '/blackout', 'Toggle blackout mode.', {
-    { name = 'true/false', help = 'Enable or disable blackout mode.' }
+TriggerEvent('chat:addSuggestion', '/blackout', Lang:t('help.blackoutcommand'), {
+    { name = Lang:t('help.truefalse'), help = Lang:t('help.blackoutcommand') }
 })
 
 for time, data in pairs(Config.PredefinedTimes) do
