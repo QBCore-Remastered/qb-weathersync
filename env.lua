@@ -28,6 +28,7 @@ Config.WeatherAPI = {
 
         if not status == 200 then return map.default or "EXTRA_SUNNY" end
 
+        if not strdata then return map.default or "EXTRA_SUNNY" end
         local data = json.decode(strdata)
         local currentWeather = data.weather[1].main
 
