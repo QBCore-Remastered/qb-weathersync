@@ -19,6 +19,7 @@ RegisterCommand('weather', function(source, args)
     end
 
     local success, message = weather:setWeather(weatherType)
+    if success then StartNewWeatherThread() end
     notify(source, message.message, message.success and 'success' or 'error', 5000)
 end, true)
 

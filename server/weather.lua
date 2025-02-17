@@ -52,9 +52,6 @@ local function setWeather(weatherType)
         lastChanged = GetGameTimer(),
     }
 
-    weatherThreads[#weatherThreads] = false
-    WeatherThread()
-
     return true, {success = true, message = 'Weather changed to: ' .. state.weather.current}
 end
 
@@ -67,23 +64,24 @@ local function getRandomWeather()
     return current[math.random(#current)] or 'CLEAR'
 end
 
-function WeatherThread()
+function StartNewWeatherThread()
     local isDynamicWeather = Config.WeatherChangeEvery > 0
     if not isDynamicWeather then return end
 
-    local id = #weatherThreads+1
-    weatherThreads[id] = true
+    if #weatherThreads > 0 and weatherThreads[#weatherThreads] then
+        weatherThreads[#weatherThreads] = false
+    end
+
+    local newid = #weatherThreads+1
+    weatherThreads[newid] = true
 
     Citizen.CreateThreadNow(function()
-        Wait(Config.WeatherChangeEvery * 60000)
+        while weatherThreads[newid] do
+            local newWeather = getRandomWeather()
+            setWeather(newWeather)
 
-        if not weatherThreads[id] then
-            weatherThreads[id] = nil
-            return
+            Wait(Config.WeatherChangeEvery * 60000)
         end
-
-        local newWeather = getRandomWeather()
-        setWeather(newWeather)
     end)
 end
 
@@ -108,6 +106,7 @@ RegisterNetEvent('qb-weathersync:ChangeWeather', function(args)
     if not IsPlayerAceAllowed(src, 'command') then return end
 
     local success, message = setWeather(args.weatherType)
+    if success then StartNewWeatherThread() end
 end)
 
-WeatherThread()
+StartNewWeatherThread()
